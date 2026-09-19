@@ -624,151 +624,174 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {/* Top System Telemetry Bar */}
-      <header className="telemetry-header">
-        <div className="brand-section">
-          <div className="brand-mark">Ta</div>
+      {/* Top Glass Navigation Bar */}
+      <header className="top-nav-bar">
+        <div className="brand-wrapper">
+          <div className="brand-icon">Ta</div>
           <div>
-            <span className="brand-title">TANTALUM TRACEABILITY</span>
-            <span className="brand-subtitle font-mono">// HYPERLEDGER FABRIC CONSORTIUM</span>
+            <div className="brand-title">
+              <span>TANTALUM TRACEABILITY</span>
+              <span className="brand-badge">WEB3 PROVENANCE</span>
+            </div>
           </div>
         </div>
 
-        <div className="telemetry-metrics">
-          <div className="telemetry-item">
-            <span className="telemetry-dot"></span>
+        <div className="nav-meta-pills">
+          <div className="meta-pill">
+            <span className="status-pulse-dot"></span>
             <span>CHANNEL: <strong>mychannel</strong></span>
           </div>
-          <div className="telemetry-item">
-            <span>CHAINCODE: <strong>v2.0 (seq 2)</strong></span>
+
+          <div className="meta-pill">
+            <span>NETWORK: <strong>Fabric v2.5</strong></span>
           </div>
-          <div className="telemetry-item">
-            <span>MSPs: <strong>Org1MSP, Org2MSP</strong></span>
-          </div>
-          <div
-            className="mode-badge"
+
+          <button
+            className="mode-toggle-pill"
             onClick={() => setUseLiveBackend(!useLiveBackend)}
-            title="Click to toggle between live backend API and local ledger cache"
+            title="Toggle Live Backend Gateway vs Local Ledger Simulation"
           >
-            <span>MODE:</span>
-            <strong>{useLiveBackend && backendHealthy ? 'LIVE FABRIC GATEWAY' : 'SIMULATION LEDGER'}</strong>
-          </div>
+            {useLiveBackend && backendHealthy ? '⚡ LIVE GATEWAY' : '◈ SIMULATION MODE'}
+          </button>
         </div>
       </header>
 
-      {/* Navigation Tabs */}
-      <nav className="workspace-nav">
-        <div className="nav-tabs">
+      {/* Segmented Top Section Tabs */}
+      <div className="segmented-nav-wrapper">
+        <nav className="segmented-nav">
           <button
-            className={`nav-tab-btn ${activeTab === 'explorer' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'explorer' ? 'active' : ''}`}
             onClick={() => setActiveTab('explorer')}
           >
-            <span className="nav-tab-index">[01]</span>
+            <span className="nav-seg-badge">01</span>
             <span>PROVENANCE & DAG INSPECTOR</span>
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'mine' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'mine' ? 'active' : ''}`}
             onClick={() => setActiveTab('mine')}
           >
-            <span className="nav-tab-index">[02]</span>
+            <span className="nav-seg-badge">02</span>
             <span>MINE EXTRACTION</span>
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'smelter' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'smelter' ? 'active' : ''}`}
             onClick={() => setActiveTab('smelter')}
           >
-            <span className="nav-tab-index">[03]</span>
+            <span className="nav-seg-badge">03</span>
             <span>SMELTER REFINERY</span>
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'mfg' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'mfg' ? 'active' : ''}`}
             onClick={() => setActiveTab('mfg')}
           >
-            <span className="nav-tab-index">[04]</span>
+            <span className="nav-seg-badge">04</span>
             <span>MANUFACTURER INTAKE</span>
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'auditor' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'auditor' ? 'active' : ''}`}
             onClick={() => setActiveTab('auditor')}
           >
-            <span className="nav-tab-index">[05]</span>
+            <span className="nav-seg-badge">05</span>
             <span>AUDIT & COMPLIANCE</span>
           </button>
 
           <button
-            className={`nav-tab-btn ${activeTab === 'ledger' ? 'active' : ''}`}
+            className={`nav-seg-btn ${activeTab === 'ledger' ? 'active' : ''}`}
             onClick={() => setActiveTab('ledger')}
           >
-            <span className="nav-tab-index">[06]</span>
+            <span className="nav-seg-badge">06</span>
             <span>CONSORTIUM LEDGER</span>
           </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
-      {/* Main Workbench Body */}
-      <main className="workbench-main">
-        {/* KPI Metrics Header Grid */}
-        <section className="kpi-row">
+      {/* Main Dashboard Content */}
+      <main className="dashboard-main">
+        {/* Global Statistics Cards */}
+        <section className="kpi-grid">
           <div className="kpi-card">
-            <span className="kpi-label">REGISTERED BATCHES</span>
-            <div className="kpi-value">{totalBatches}</div>
-            <span className="kpi-meta">Immutable ledger assets</span>
+            <div className="kpi-header-row">
+              <span className="kpi-title">REGISTERED BATCHES</span>
+              <span className="kpi-icon-pill">📦</span>
+            </div>
+            <div className="kpi-metric">{totalBatches}</div>
+            <div className="kpi-description">Immutable ledger assets</div>
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label">TOTAL MASS (KG)</span>
-            <div className="kpi-value">{totalWeightRecorded.toLocaleString()} kg</div>
-            <span className="kpi-meta">Tantalite material balance</span>
+            <div className="kpi-header-row">
+              <span className="kpi-title">TOTAL MASS</span>
+              <span className="kpi-icon-pill">⚖</span>
+            </div>
+            <div className="kpi-metric" style={{ color: 'var(--accent-yellow)' }}>
+              {totalWeightRecorded.toLocaleString()} kg
+            </div>
+            <div className="kpi-description">Tantalite material balance</div>
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label">FLAGGED ANOMALIES</span>
-            <div className="kpi-value" style={{ color: totalFlaggedBatches > 0 ? '#fbbf24' : '#10b981' }}>
+            <div className="kpi-header-row">
+              <span className="kpi-title">FLAGGED ANOMALIES</span>
+              <span className="kpi-icon-pill">⚠</span>
+            </div>
+            <div
+              className="kpi-metric"
+              style={{ color: totalFlaggedBatches > 0 ? 'var(--status-warning)' : 'var(--status-success)' }}
+            >
               {totalFlaggedBatches}
             </div>
-            <span className="kpi-meta">Active risk assessments</span>
+            <div className="kpi-description">Active risk assessments</div>
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label">CONFIRMED RECEIPTS</span>
-            <div className="kpi-value" style={{ color: '#10b981' }}>
+            <div className="kpi-header-row">
+              <span className="kpi-title">CONFIRMED RECEIPTS</span>
+              <span className="kpi-icon-pill">✓</span>
+            </div>
+            <div className="kpi-metric" style={{ color: 'var(--status-success)' }}>
               {totalReceipts}
             </div>
-            <span className="kpi-meta">Manufacturer intake complete</span>
+            <div className="kpi-description">Manufacturer intake complete</div>
           </div>
 
           <div className="kpi-card">
-            <span className="kpi-label">CONSENSUS STATUS</span>
-            <div className="kpi-value" style={{ color: '#10b981', fontSize: '15px', paddingTop: '4px' }}>
+            <div className="kpi-header-row">
+              <span className="kpi-title">CONSENSUS STATUS</span>
+              <span className="kpi-icon-pill">⚡</span>
+            </div>
+            <div className="kpi-metric" style={{ fontSize: '18px', color: 'var(--status-success)', paddingTop: '6px' }}>
               RAFT PEERS SYNCED
             </div>
-            <span className="kpi-meta font-mono">Channel block height: #1,408,935</span>
+            <div className="kpi-description font-mono" style={{ fontSize: '11px' }}>
+              Block height: #1,408,935
+            </div>
           </div>
         </section>
 
-        {/* TAB 1: PROVENANCE & LINEAGE DAG INSPECTOR */}
+        {/* SECTION 1: PROVENANCE & DAG INSPECTOR */}
         {activeTab === 'explorer' && (
-          <div className="panes-layout">
-            {/* Left Pane: Interactive DAG Lineage Graph */}
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>CHAIN-OF-CUSTODY DAG LINEAGE GRAPH</span>
-                </span>
-                <span className="label-caps">DIRECTED ACYCLIC GRAPH</span>
+          <div className="panes-grid-split">
+            {/* Left Pane: Interactive DAG Lineage Flow */}
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">SUPPLY-CHAIN LINEAGE DAG</span>
+                </div>
+                <span className="card-role-pill">CUSTODY GRAPH</span>
               </div>
 
-              <div className="panel-body">
-                <div className="dag-viewport">
-                  <div className="dag-tree">
-                    {/* Stage 1: Mine Extraction */}
-                    <div className="dag-stage-column">
-                      <div className="dag-stage-header">
-                        <span style={{ color: 'var(--role-mine)' }}>■</span>
+              <div className="card-body">
+                {/* Visual Directed Acyclic Graph */}
+                <div className="dag-canvas">
+                  <div className="dag-flow-row">
+                    {/* Stage 1: Mine Extractions */}
+                    <div className="dag-column">
+                      <div className="dag-column-label">
+                        <span style={{ color: 'var(--role-mine)' }}>●</span>
                         <span>01. MINE EXTRACTION</span>
                       </div>
 
@@ -779,31 +802,34 @@ export default function App() {
                         return (
                           <div
                             key={id}
-                            className={`dag-node-card role-mine ${isSel ? 'selected' : ''}`}
+                            className={`dag-node-box ${isSel ? 'selected' : ''}`}
                             onClick={() => {
                               setSearchBatchId(id);
                               inspectBatch(id);
                             }}
                           >
-                            <div className="dag-node-header">
+                            <div className="dag-node-stripe mine"></div>
+                            <div className="dag-node-top">
                               <span className="dag-node-id">{b.batchId}</span>
-                              <span className="dag-node-weight">{b.weight} kg</span>
+                              <span className="dag-node-mass">{b.weight} kg</span>
                             </div>
-                            <div className="dag-node-meta">
+                            <div className="dag-node-bottom">
                               <span>{b.actorId}</span>
-                              <span>{b.flags?.length ? `⚠ ${b.flags.length} Flag` : '✓ Clean'}</span>
+                              <span style={{ color: b.flags?.length ? 'var(--status-warning)' : 'var(--status-success)' }}>
+                                {b.flags?.length ? `⚠ ${b.flags.length} Flag` : '✓ Certified'}
+                              </span>
                             </div>
                           </div>
                         );
                       })}
                     </div>
 
-                    <div className="dag-connector"></div>
+                    <div className="dag-arrow-connector"></div>
 
-                    {/* Stage 2: Smelter Processing */}
-                    <div className="dag-stage-column">
-                      <div className="dag-stage-header">
-                        <span style={{ color: 'var(--role-smelter)' }}>■</span>
+                    {/* Stage 2: Smelter Consolidation */}
+                    <div className="dag-column">
+                      <div className="dag-column-label">
+                        <span style={{ color: 'var(--role-smelter)' }}>●</span>
                         <span>02. SMELTER TOLLING</span>
                       </div>
 
@@ -814,17 +840,18 @@ export default function App() {
                         return (
                           <div
                             key={id}
-                            className={`dag-node-card role-smelter ${isSel ? 'selected' : ''}`}
+                            className={`dag-node-box ${isSel ? 'selected' : ''}`}
                             onClick={() => {
                               setSearchBatchId(id);
                               inspectBatch(id);
                             }}
                           >
-                            <div className="dag-node-header">
+                            <div className="dag-node-stripe smelter"></div>
+                            <div className="dag-node-top">
                               <span className="dag-node-id">{b.batchId}</span>
-                              <span className="dag-node-weight">{b.weight} kg</span>
+                              <span className="dag-node-mass">{b.weight} kg</span>
                             </div>
-                            <div className="dag-node-meta">
+                            <div className="dag-node-bottom">
                               <span>MERGE (TB001+TB002)</span>
                               <span>{b.actorId}</span>
                             </div>
@@ -833,12 +860,12 @@ export default function App() {
                       })}
                     </div>
 
-                    <div className="dag-connector"></div>
+                    <div className="dag-arrow-connector"></div>
 
-                    {/* Stage 3: Split & Manufacturer Intake */}
-                    <div className="dag-stage-column">
-                      <div className="dag-stage-header">
-                        <span style={{ color: 'var(--role-mfg)' }}>■</span>
+                    {/* Stage 3: Refined Derivative Lots & Manufacturer */}
+                    <div className="dag-column">
+                      <div className="dag-column-label">
+                        <span style={{ color: 'var(--role-mfg)' }}>●</span>
                         <span>03. REFINED LOTS & INTAKE</span>
                       </div>
 
@@ -849,19 +876,22 @@ export default function App() {
                         return (
                           <div
                             key={id}
-                            className={`dag-node-card role-mfg ${isSel ? 'selected' : ''}`}
+                            className={`dag-node-box ${isSel ? 'selected' : ''}`}
                             onClick={() => {
                               setSearchBatchId(id);
                               inspectBatch(id);
                             }}
                           >
-                            <div className="dag-node-header">
+                            <div className="dag-node-stripe mfg"></div>
+                            <div className="dag-node-top">
                               <span className="dag-node-id">{b.batchId}</span>
-                              <span className="dag-node-weight">{b.weight} kg</span>
+                              <span className="dag-node-mass">{b.weight} kg</span>
                             </div>
-                            <div className="dag-node-meta">
+                            <div className="dag-node-bottom">
                               <span>SPLIT FROM TB100</span>
-                              <span>{b.receivedAt ? '✓ RECEIVED' : 'IN TRANSIT'}</span>
+                              <span style={{ color: b.receivedAt ? 'var(--status-success)' : 'var(--text-muted)' }}>
+                                {b.receivedAt ? '✓ INTAKE DONE' : 'IN TRANSIT'}
+                              </span>
                             </div>
                           </div>
                         );
@@ -870,19 +900,22 @@ export default function App() {
                   </div>
                 </div>
 
-                <div style={{ marginTop: '12px' }}>
-                  <span className="label-caps">QUICK PRESET BATCH LOOKUP</span>
-                  <div className="search-chips" style={{ marginTop: '6px' }}>
+                {/* Quick Selection Chips */}
+                <div>
+                  <div style={{ fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                    QUICK PRESET BATCH INSPECTION
+                  </div>
+                  <div className="chips-row">
                     {Object.keys(localLedger).map((id) => (
                       <button
                         key={id}
-                        className="search-chip"
+                        className="preset-chip"
                         onClick={() => {
                           setSearchBatchId(id);
                           inspectBatch(id);
                         }}
                       >
-                        {id} ({localLedger[id]?.action})
+                        {id} • {localLedger[id]?.action.toUpperCase()}
                       </button>
                     ))}
                   </div>
@@ -890,72 +923,76 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Pane: Batch Inspector & Risk Meter */}
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>BATCH PROVENANCE INSPECTOR</span>
-                </span>
-                <span className="label-caps">AUDIT PANEL</span>
+            {/* Right Pane: Batch Provenance Inspector */}
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">BATCH PROVENANCE INSPECTOR</span>
+                </div>
+                <span className="card-role-pill">DETAIL PANEL</span>
               </div>
 
-              <div className="panel-body">
+              <div className="card-body">
                 {/* Search Bar */}
-                <div className="search-control">
+                <div className="search-bar-wrapper">
                   <input
                     type="text"
-                    className="search-input-field"
-                    placeholder="Enter Batch ID (e.g. TB100)..."
+                    className="search-input font-mono"
+                    placeholder="Search Batch ID (e.g. TB100)..."
                     value={searchBatchId}
                     onChange={(e) => setSearchBatchId(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && inspectBatch()}
                   />
-                  <button className="btn-primary" onClick={() => inspectBatch()} disabled={searchLoading}>
+                  <button className="btn-cta-yellow" onClick={() => inspectBatch()} disabled={searchLoading}>
                     {searchLoading ? 'QUERYING...' : 'INSPECT'}
                   </button>
                 </div>
 
                 {searchError && (
-                  <div className="feedback-box error">
+                  <div className="toast-banner error">
                     <span>✕</span>
                     <span>{searchError}</span>
                   </div>
                 )}
 
                 {inspectedBatch && (
-                  <div className="inspector-details">
-                    <div className="inspector-banner">
+                  <div className="inspector-card-content">
+                    <div className="inspector-header-box">
                       <div>
-                        <span className="label-caps">SELECTED BATCH ID</span>
-                        <div className="inspector-batch-name">{inspectedBatch.batchId}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>
+                          SELECTED BATCH ID
+                        </div>
+                        <div className="inspector-batch-title">{inspectedBatch.batchId}</div>
                       </div>
-                      <span className="badge verified">LEDGER VERIFIED</span>
+                      <span className="status-pill low">✓ VERIFIED ON LEDGER</span>
                     </div>
 
-                    {/* Contamination Risk Breakdown */}
-                    <div className="risk-assessment-box">
+                    {/* Contamination Risk Visual Card */}
+                    <div className="risk-gauge-banner">
                       <div>
-                        <span className="label-caps">CONTAMINATION RISK SCORE</span>
-                        <div className="risk-score-display">
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px' }}>
+                          CONTAMINATION RISK SCORE
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                           <span
-                            className="risk-score-number"
+                            className="risk-number-large"
                             style={{
                               color:
                                 (inspectedScore || 0) >= 70
                                   ? 'var(--status-critical)'
                                   : (inspectedScore || 0) >= 30
                                   ? 'var(--status-warning)'
-                                  : 'var(--status-verified)'
+                                  : 'var(--status-success)'
                             }}
                           >
                             {inspectedScore !== null ? inspectedScore : 0}
                           </span>
-                          <span className="risk-score-max">/ 100</span>
+                          <span className="risk-scale-label">/ 100</span>
                         </div>
                       </div>
 
                       <span
-                        className={`risk-pill ${
+                        className={`status-pill ${
                           (inspectedScore || 0) >= 70
                             ? 'critical'
                             : (inspectedScore || 0) >= 30
@@ -964,70 +1001,74 @@ export default function App() {
                         }`}
                       >
                         {(inspectedScore || 0) >= 70
-                          ? 'CRITICAL RISK'
+                          ? 'CRITICAL ANOMALY'
                           : (inspectedScore || 0) >= 30
                           ? 'MODERATE RISK'
                           : 'OECD COMPLIANT (LOW)'}
                       </span>
                     </div>
 
-                    {/* Metadata Grid */}
-                    <div className="inspector-grid">
-                      <div className="inspector-cell">
-                        <div className="inspector-cell-label">TRANSFORMATION ACTION</div>
-                        <div className="inspector-cell-value">{inspectedBatch.action.toUpperCase()}</div>
+                    {/* Key-Value Metadata Grid */}
+                    <div className="metadata-grid-2col">
+                      <div className="metadata-tile">
+                        <div className="metadata-tile-label">TRANSFORMATION ACTION</div>
+                        <div className="metadata-tile-val">{inspectedBatch.action.toUpperCase()}</div>
                       </div>
 
-                      <div className="inspector-cell">
-                        <div className="inspector-cell-label">RECORDED MASS</div>
-                        <div className="inspector-cell-value">{inspectedBatch.weight} kg</div>
-                      </div>
-
-                      <div className="inspector-cell">
-                        <div className="inspector-cell-label">ENDORSER / ACTOR</div>
-                        <div className="inspector-cell-value">{inspectedBatch.actorId}</div>
-                      </div>
-
-                      <div className="inspector-cell">
-                        <div className="inspector-cell-label">MANUFACTURER RECEIPT</div>
-                        <div className="inspector-cell-value" style={{ color: inspectedBatch.receivedAt ? 'var(--status-verified)' : 'var(--text-dim)' }}>
-                          {inspectedBatch.receivedAt ? 'CONFIRMED' : 'PENDING'}
+                      <div className="metadata-tile">
+                        <div className="metadata-tile-label">RECORDED DRY MASS</div>
+                        <div className="metadata-tile-val" style={{ color: 'var(--accent-yellow)' }}>
+                          {inspectedBatch.weight} kg
                         </div>
                       </div>
 
-                      <div className="inspector-cell" style={{ gridColumn: '1 / -1' }}>
-                        <div className="inspector-cell-label">BLOCKCHAIN TRANSACTION SIGNATURE</div>
-                        <div className="inspector-cell-value font-mono" style={{ fontSize: '10px' }}>
-                          {inspectedBatch.signature || 'tx_0x9f1a8c2049b810d7a4e61234bc567890ef1234567890abcdef1234567890abcd'}
+                      <div className="metadata-tile">
+                        <div className="metadata-tile-label">ENDORSER / ACTOR ID</div>
+                        <div className="metadata-tile-val">{inspectedBatch.actorId}</div>
+                      </div>
+
+                      <div className="metadata-tile">
+                        <div className="metadata-tile-label">MANUFACTURER INTAKE</div>
+                        <div className="metadata-tile-val" style={{ color: inspectedBatch.receivedAt ? 'var(--status-success)' : 'var(--text-muted)' }}>
+                          {inspectedBatch.receivedAt ? 'CONFIRMED' : 'PENDING INTAKE'}
                         </div>
                       </div>
                     </div>
 
-                    {/* Associated Parent Lots */}
+                    {/* Transaction Signature */}
+                    <div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', marginBottom: '6px' }}>
+                        TRANSACTION SIGNATURE HASH
+                      </div>
+                      <div className="signature-box">
+                        {inspectedBatch.signature || 'tx_0x9f1a8c2049b810d7a4e61234bc567890ef1234567890abcdef1234567890abcd'}
+                      </div>
+                    </div>
+
+                    {/* Parents & Flags */}
                     {inspectedBatch.parents && inspectedBatch.parents.length > 0 && (
-                      <div>
-                        <span className="label-caps">PARENT BATCH LINEAGE CONTRIBUTIONS</span>
-                        <div className="parents-list" style={{ marginTop: '6px' }}>
+                      <div className="metadata-tile">
+                        <div className="metadata-tile-label">PARENT LOT CONTRIBUTIONS</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px' }}>
                           {inspectedBatch.parents.map((p, idx) => (
-                            <div key={idx} className="parent-item">
+                            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
                               <span>Parent: <strong>{p.parentBatchId}</strong></span>
-                              <span>Contribution: <strong>{p.weightContributed} kg</strong></span>
+                              <span style={{ color: 'var(--accent-yellow)' }}>{p.weightContributed} kg</span>
                             </div>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    {/* Active Flags */}
                     {inspectedBatch.flags && inspectedBatch.flags.length > 0 && (
-                      <div>
-                        <span className="label-caps">ACTIVE AUDIT RISK FLAGS</span>
-                        <div className="flags-list" style={{ marginTop: '6px' }}>
+                      <div className="metadata-tile" style={{ borderLeft: '4px solid var(--status-critical)' }}>
+                        <div className="metadata-tile-label">ACTIVE AUDIT RISK FLAGS</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px' }}>
                           {inspectedBatch.flags.map((fl, idx) => (
-                            <div key={idx} className={`flag-item ${fl.dilutable ? 'warning' : 'critical'}`}>
-                              <span>{fl.flagType.toUpperCase()} (Severity: {fl.severity}%)</span>
-                              <span className="badge" style={{ fontSize: '8px' }}>
-                                {fl.dilutable ? 'DILUTABLE' : 'NON-DILUTABLE CRITICAL'}
+                            <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px' }}>
+                              <span>{fl.flagType.toUpperCase()} ({fl.severity}%)</span>
+                              <span className={`status-pill ${fl.dilutable ? 'moderate' : 'critical'}`} style={{ fontSize: '10px' }}>
+                                {fl.dilutable ? 'DILUTABLE' : 'CRITICAL NON-DILUTABLE'}
                               </span>
                             </div>
                           ))}
@@ -1041,72 +1082,72 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 2: MINE EXTRACTION PORTAL */}
+        {/* SECTION 2: MINE EXTRACTION */}
         {activeTab === 'mine' && (
-          <div className="panes-layout-single">
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>MINE PORTAL — RAW ORE EXTRACTION INTAKE</span>
-                </span>
-                <span className="label-caps">ROLE: MINE (ORG1MSP)</span>
+          <div className="panes-grid-single">
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">MINE PORTAL — RAW ORE EXTRACTION INTAKE</span>
+                </div>
+                <span className="card-role-pill">ROLE: MINE (ORG1MSP)</span>
               </div>
 
-              <div className="panel-body">
-                <form className="form-grid" onSubmit={handleCreateMineBatch}>
-                  <div className="form-field">
-                    <label className="form-label">BATCH IDENTIFIER</label>
+              <div className="card-body">
+                <form className="form-layout-grid" onSubmit={handleCreateMineBatch}>
+                  <div className="form-field-group">
+                    <label className="form-label-text">BATCH IDENTIFIER</label>
                     <input
                       type="text"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       placeholder="e.g. TB200"
                       value={mineForm.batchId}
                       onChange={(e) => setMineForm({ ...mineForm, batchId: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">ACTOR IDENTITY</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">ACTOR IDENTITY</label>
                     <input
                       type="text"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       value={mineForm.actorId}
                       onChange={(e) => setMineForm({ ...mineForm, actorId: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">DRY MASS WEIGHT (KG)</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">DRY MASS WEIGHT (KG)</label>
                     <input
                       type="number"
                       step="0.01"
                       min="0"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       placeholder="e.g. 150"
                       value={mineForm.weight}
                       onChange={(e) => setMineForm({ ...mineForm, weight: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">CONCESSION / SECTOR GEOLOCATION</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">CONCESSION / SECTOR GEOLOCATION</label>
                     <input
                       type="text"
-                      className="form-input"
+                      className="form-input-styled"
                       value={mineForm.concession}
                       onChange={(e) => setMineForm({ ...mineForm, concession: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-actions">
-                    <button type="submit" className="btn-primary" disabled={mineLoading}>
-                      {mineLoading ? 'TRANSACTING...' : 'COMMIT EXTRACTION TO LEDGER'}
+                  <div className="form-submit-footer">
+                    <button type="submit" className="btn-cta-yellow" disabled={mineLoading}>
+                      {mineLoading ? 'TRANSACTING WITH FABRIC...' : 'COMMIT EXTRACTION TO LEDGER'}
                     </button>
                   </div>
                 </form>
 
                 {mineFeedback && (
-                  <div className={`feedback-box ${mineFeedback.type}`}>
+                  <div className={`toast-banner ${mineFeedback.type}`}>
                     <span>{mineFeedback.type === 'success' ? '✓' : '✕'}</span>
                     <span>{mineFeedback.message}</span>
                   </div>
@@ -1116,195 +1157,195 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 3: SMELTER REFINERY PORTAL */}
+        {/* SECTION 3: SMELTER REFINERY */}
         {activeTab === 'smelter' && (
-          <div className="panes-layout-single">
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <div style={{ display: 'flex', gap: '8px' }}>
+          <div className="panes-grid-single">
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="sub-tab-switch">
                   <button
-                    className={`btn-secondary btn-sm ${smelterMode === 'merge' ? 'active' : ''}`}
+                    className={`sub-tab-btn ${smelterMode === 'merge' ? 'active' : ''}`}
                     onClick={() => { setSmelterMode('merge'); setSmelterFeedback(null); }}
                   >
                     CONSOLIDATION / MERGE BATCHES
                   </button>
                   <button
-                    className={`btn-secondary btn-sm ${smelterMode === 'split' ? 'active' : ''}`}
+                    className={`sub-tab-btn ${smelterMode === 'split' ? 'active' : ''}`}
                     onClick={() => { setSmelterMode('split'); setSmelterFeedback(null); }}
                   >
                     FRACTIONATION / SPLIT BATCH
                   </button>
                 </div>
-                <span className="label-caps">ROLE: SMELTER (ORG1MSP)</span>
+                <span className="card-role-pill">ROLE: SMELTER (ORG1MSP)</span>
               </div>
 
-              <div className="panel-body">
+              <div className="card-body">
                 {smelterMode === 'merge' ? (
-                  <form className="form-grid" onSubmit={handleMergeBatches}>
-                    <div className="form-field">
-                      <label className="form-label">NEW OUTPUT BATCH ID</label>
+                  <form className="form-layout-grid" onSubmit={handleMergeBatches}>
+                    <div className="form-field-group">
+                      <label className="form-label-text">NEW OUTPUT BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB300"
                         value={mergeForm.newBatchId}
                         onChange={(e) => setMergeForm({ ...mergeForm, newBatchId: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">SMELTER ACTOR ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">SMELTER ACTOR ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         value={mergeForm.actorId}
                         onChange={(e) => setMergeForm({ ...mergeForm, actorId: e.target.value })}
                       />
                     </div>
 
-                    <div className="section-divider">
-                      <span>PARENT LOT 1 INFEED</span>
+                    <div className="form-section-separator">
+                      <span>PARENT LOT 1 ALLOCATION</span>
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">PARENT 1 BATCH ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">PARENT 1 BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB001"
                         value={mergeForm.parent1}
                         onChange={(e) => setMergeForm({ ...mergeForm, parent1: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">PARENT 1 WEIGHT (KG)</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">PARENT 1 WEIGHT (KG)</label>
                       <input
                         type="number"
                         step="0.01"
                         min="0"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. 50"
                         value={mergeForm.weight1}
                         onChange={(e) => setMergeForm({ ...mergeForm, weight1: e.target.value })}
                       />
                     </div>
 
-                    <div className="section-divider">
-                      <span>PARENT LOT 2 INFEED</span>
+                    <div className="form-section-separator">
+                      <span>PARENT LOT 2 ALLOCATION</span>
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">PARENT 2 BATCH ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">PARENT 2 BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB002"
                         value={mergeForm.parent2}
                         onChange={(e) => setMergeForm({ ...mergeForm, parent2: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">PARENT 2 WEIGHT (KG)</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">PARENT 2 WEIGHT (KG)</label>
                       <input
                         type="number"
                         step="0.01"
                         min="0"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. 50"
                         value={mergeForm.weight2}
                         onChange={(e) => setMergeForm({ ...mergeForm, weight2: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-actions">
-                      <button type="submit" className="btn-primary" disabled={smelterLoading}>
+                    <div className="form-submit-footer">
+                      <button type="submit" className="btn-cta-yellow" disabled={smelterLoading}>
                         {smelterLoading ? 'EXECUTING MERGE...' : 'EXECUTE SMELTER MERGE'}
                       </button>
                     </div>
                   </form>
                 ) : (
-                  <form className="form-grid" onSubmit={handleSplitBatch}>
-                    <div className="form-field">
-                      <label className="form-label">SOURCE PARENT BATCH ID</label>
+                  <form className="form-layout-grid" onSubmit={handleSplitBatch}>
+                    <div className="form-field-group">
+                      <label className="form-label-text">SOURCE PARENT BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB100"
                         value={splitForm.parentBatchId}
                         onChange={(e) => setSplitForm({ ...splitForm, parentBatchId: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">SMELTER ACTOR ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">SMELTER ACTOR ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         value={splitForm.actorId}
                         onChange={(e) => setSplitForm({ ...splitForm, actorId: e.target.value })}
                       />
                     </div>
 
-                    <div className="section-divider">
+                    <div className="form-section-separator">
                       <span>CHILD ALLOCATION 1</span>
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">CHILD 1 BATCH ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">CHILD 1 BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB103"
                         value={splitForm.child1}
                         onChange={(e) => setSplitForm({ ...splitForm, child1: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">CHILD 1 WEIGHT (KG)</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">CHILD 1 WEIGHT (KG)</label>
                       <input
                         type="number"
                         step="0.01"
                         min="0"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. 100"
                         value={splitForm.weight1}
                         onChange={(e) => setSplitForm({ ...splitForm, weight1: e.target.value })}
                       />
                     </div>
 
-                    <div className="section-divider">
+                    <div className="form-section-separator">
                       <span>CHILD ALLOCATION 2</span>
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">CHILD 2 BATCH ID</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">CHILD 2 BATCH ID</label>
                       <input
                         type="text"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. TB104"
                         value={splitForm.child2}
                         onChange={(e) => setSplitForm({ ...splitForm, child2: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-field">
-                      <label className="form-label">CHILD 2 WEIGHT (KG)</label>
+                    <div className="form-field-group">
+                      <label className="form-label-text">CHILD 2 WEIGHT (KG)</label>
                       <input
                         type="number"
                         step="0.01"
                         min="0"
-                        className="form-input"
+                        className="form-input-styled font-mono"
                         placeholder="e.g. 100"
                         value={splitForm.weight2}
                         onChange={(e) => setSplitForm({ ...splitForm, weight2: e.target.value })}
                       />
                     </div>
 
-                    <div className="form-actions">
-                      <button type="submit" className="btn-primary" disabled={smelterLoading}>
+                    <div className="form-submit-footer">
+                      <button type="submit" className="btn-cta-yellow" disabled={smelterLoading}>
                         {smelterLoading ? 'EXECUTING SPLIT...' : 'EXECUTE SMELTER SPLIT'}
                       </button>
                     </div>
@@ -1312,7 +1353,7 @@ export default function App() {
                 )}
 
                 {smelterFeedback && (
-                  <div className={`feedback-box ${smelterFeedback.type}`}>
+                  <div className={`toast-banner ${smelterFeedback.type}`}>
                     <span>{smelterFeedback.type === 'success' ? '✓' : '✕'}</span>
                     <span>{smelterFeedback.message}</span>
                   </div>
@@ -1322,39 +1363,39 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 4: MANUFACTURER INTAKE PORTAL */}
+        {/* SECTION 4: MANUFACTURER INTAKE */}
         {activeTab === 'mfg' && (
-          <div className="panes-layout-single">
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>MANUFACTURER INTAKE — RECORD CUSTODY RECEIPT</span>
-                </span>
-                <span className="label-caps">ROLE: MANUFACTURER (ORG2MSP)</span>
+          <div className="panes-grid-single">
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">MANUFACTURER INTAKE — CUSTODY VERIFICATION</span>
+                </div>
+                <span className="card-role-pill">ROLE: MANUFACTURER (ORG2MSP)</span>
               </div>
 
-              <div className="panel-body">
-                <form className="form-grid" onSubmit={handleRecordReceipt}>
-                  <div className="form-field full-width">
-                    <label className="form-label">INCOMING REFINED BATCH IDENTIFIER</label>
+              <div className="card-body">
+                <form className="form-layout-grid" onSubmit={handleRecordReceipt}>
+                  <div className="form-field-group span-2">
+                    <label className="form-label-text">INCOMING REFINED BATCH IDENTIFIER</label>
                     <input
                       type="text"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       placeholder="e.g. TB102"
                       value={mfgForm.batchId}
                       onChange={(e) => setMfgForm({ ...mfgForm, batchId: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-actions">
-                    <button type="submit" className="btn-primary" disabled={mfgLoading}>
+                  <div className="form-submit-footer">
+                    <button type="submit" className="btn-cta-yellow" disabled={mfgLoading}>
                       {mfgLoading ? 'RECORDING RECEIPT...' : 'CONFIRM NOTARIZED RECEIPT'}
                     </button>
                   </div>
                 </form>
 
                 {mfgFeedback && (
-                  <div className={`feedback-box ${mfgFeedback.type}`}>
+                  <div className={`toast-banner ${mfgFeedback.type}`}>
                     <span>{mfgFeedback.type === 'success' ? '✓' : '✕'}</span>
                     <span>{mfgFeedback.message}</span>
                   </div>
@@ -1364,34 +1405,34 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 5: AUDIT & COMPLIANCE PORTAL */}
+        {/* SECTION 5: AUDIT & COMPLIANCE */}
         {activeTab === 'auditor' && (
-          <div className="panes-layout-single">
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>AUDITOR PORTAL — CONFLICT MINERAL RISK ATTACHMENT</span>
-                </span>
-                <span className="label-caps">ROLE: AUDITOR (ORG2MSP)</span>
+          <div className="panes-grid-single">
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">AUDIT & COMPLIANCE — CONFLICT RISK ATTACHMENT</span>
+                </div>
+                <span className="card-role-pill">ROLE: AUDITOR (ORG2MSP)</span>
               </div>
 
-              <div className="panel-body">
-                <form className="form-grid" onSubmit={handleFlagBatch}>
-                  <div className="form-field">
-                    <label className="form-label">TARGET BATCH ID</label>
+              <div className="card-body">
+                <form className="form-layout-grid" onSubmit={handleFlagBatch}>
+                  <div className="form-field-group">
+                    <label className="form-label-text">TARGET BATCH ID</label>
                     <input
                       type="text"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       placeholder="e.g. TB100"
                       value={auditForm.batchId}
                       onChange={(e) => setAuditForm({ ...auditForm, batchId: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">ANOMALY / FLAG CLASSIFICATION</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">ANOMALY / FLAG CLASSIFICATION</label>
                     <select
-                      className="form-select"
+                      className="form-select-styled"
                       value={auditForm.flagType}
                       onChange={(e) => setAuditForm({ ...auditForm, flagType: e.target.value })}
                     >
@@ -1402,39 +1443,39 @@ export default function App() {
                     </select>
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">SEVERITY COEFFICIENT (0 – 100%)</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">SEVERITY COEFFICIENT (0 – 100%)</label>
                     <input
                       type="number"
                       min="0"
                       max="100"
-                      className="form-input"
+                      className="form-input-styled font-mono"
                       value={auditForm.severity}
                       onChange={(e) => setAuditForm({ ...auditForm, severity: e.target.value })}
                     />
                   </div>
 
-                  <div className="form-field">
-                    <label className="form-label">PROPAGATION DILUTABILITY STATUS</label>
+                  <div className="form-field-group">
+                    <label className="form-label-text">PROPAGATION DILUTABILITY STATUS</label>
                     <select
-                      className="form-select"
+                      className="form-select-styled"
                       value={auditForm.dilutable}
                       onChange={(e) => setAuditForm({ ...auditForm, dilutable: e.target.value })}
                     >
                       <option value="true">Dilutable (Weighted mass propagation across merges/splits)</option>
-                      <option value="false">Non-Dilutable (CRITICAL: Any downstream batch carries 100% flag)</option>
+                      <option value="false">Non-Dilutable (CRITICAL: Downstream batches carry 100% flag)</option>
                     </select>
                   </div>
 
-                  <div className="form-actions">
-                    <button type="submit" className="btn-primary" disabled={auditLoading}>
-                      {auditLoading ? 'TRANSACTING...' : 'BROADCAST AUDITOR RISK FLAG'}
+                  <div className="form-submit-footer">
+                    <button type="submit" className="btn-cta-yellow" disabled={auditLoading}>
+                      {auditLoading ? 'BROADCASTING FLAG...' : 'BROADCAST AUDITOR RISK FLAG'}
                     </button>
                   </div>
                 </form>
 
                 {auditFeedback && (
-                  <div className={`feedback-box ${auditFeedback.type}`}>
+                  <div className={`toast-banner ${auditFeedback.type}`}>
                     <span>{auditFeedback.type === 'success' ? '✓' : '✕'}</span>
                     <span>{auditFeedback.message}</span>
                   </div>
@@ -1444,19 +1485,23 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 6: CONSORTIUM IMMUTABLE LEDGER */}
+        {/* SECTION 6: CONSORTIUM LEDGER */}
         {activeTab === 'ledger' && (
-          <div className="panes-layout-single">
-            <div className="panel-container">
-              <div className="panel-header-bar">
-                <span className="panel-title">
-                  <span>IMMUTABLE LEDGER TRANSACTION AUDIT TRAIL</span>
-                </span>
-                <div style={{ display: 'flex', gap: '6px' }}>
+          <div className="panes-grid-single">
+            <div className="card-container">
+              <div className="card-header-bar">
+                <div className="card-title-group">
+                  <span className="card-title-text">IMMUTABLE CONSORTIUM LEDGER EXPLORER</span>
+                </div>
+                <div className="chips-row">
                   {['ALL', 'EXTRACT', 'MERGE', 'SPLIT'].map((act) => (
                     <button
                       key={act}
-                      className={`btn-secondary btn-sm ${ledgerActionFilter === act ? 'active' : ''}`}
+                      className={`preset-chip ${ledgerActionFilter === act ? 'active' : ''}`}
+                      style={{
+                        background: ledgerActionFilter === act ? 'var(--accent-yellow)' : undefined,
+                        color: ledgerActionFilter === act ? '#15140D' : undefined
+                      }}
                       onClick={() => setLedgerActionFilter(act)}
                     >
                       {act}
@@ -1465,9 +1510,9 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="panel-body" style={{ padding: 0 }}>
-                <div className="data-table-container">
-                  <table className="data-table">
+              <div className="card-body" style={{ padding: 0 }}>
+                <div className="ledger-table-wrap">
+                  <table className="modern-ledger-table">
                     <thead>
                       <tr>
                         <th>BLOCK #</th>
@@ -1478,7 +1523,7 @@ export default function App() {
                         <th>PARENTS</th>
                         <th>FLAGS</th>
                         <th>RECEIPT STATUS</th>
-                        <th>TX SIGNATURE HASH</th>
+                        <th>TX SIGNATURE</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1492,42 +1537,42 @@ export default function App() {
                             setActiveTab('explorer');
                           }}
                         >
-                          <td>#{b.blockHeight || 1408900}</td>
-                          <td><strong>{b.batchId}</strong></td>
+                          <td className="font-mono">#{b.blockHeight || 1408900}</td>
+                          <td className="font-mono"><strong>{b.batchId}</strong></td>
                           <td>
-                            <span
-                              className="badge"
-                              style={{
-                                color:
-                                  b.action === 'extract'
-                                    ? 'var(--role-mine)'
-                                    : b.action === 'merge'
-                                    ? 'var(--role-smelter)'
-                                    : 'var(--role-mfg)'
-                              }}
-                            >
+                            <span className={`stage-tag ${b.action}`}>
                               {b.action.toUpperCase()}
                             </span>
                           </td>
-                          <td>{b.actorId}</td>
-                          <td>{b.weight} kg</td>
-                          <td>{b.parents?.length || 0}</td>
+                          <td className="font-mono">{b.actorId}</td>
+                          <td className="font-mono" style={{ color: 'var(--accent-yellow)', fontWeight: '600' }}>
+                            {b.weight} kg
+                          </td>
+                          <td className="font-mono">{b.parents?.length || 0}</td>
                           <td>
                             {b.flags?.length ? (
-                              <span className="badge warning">{b.flags.length} Flagged</span>
+                              <span className="status-pill moderate" style={{ fontSize: '10px' }}>
+                                ⚠ {b.flags.length} Flagged
+                              </span>
                             ) : (
-                              <span className="badge verified">Clean</span>
+                              <span className="status-pill low" style={{ fontSize: '10px' }}>
+                                ✓ Certified
+                              </span>
                             )}
                           </td>
                           <td>
                             {b.receivedAt ? (
-                              <span className="badge verified">Received</span>
+                              <span className="status-pill low" style={{ fontSize: '10px' }}>
+                                Received
+                              </span>
                             ) : (
-                              <span className="badge">Pending</span>
+                              <span style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
+                                In Transit
+                              </span>
                             )}
                           </td>
-                          <td style={{ fontSize: '10px' }}>
-                            {b.signature ? `${b.signature.substring(0, 14)}...` : 'tx_0x9f1a8c...'}
+                          <td className="font-mono" style={{ fontSize: '11px' }}>
+                            {b.signature ? `${b.signature.substring(0, 14)}...` : 'tx_0x9f1a...'}
                           </td>
                         </tr>
                       ))}
@@ -1540,10 +1585,10 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="workbench-footer">
+      {/* Dashboard Footer */}
+      <footer className="dashboard-footer">
         <div>TANTALUM TRACEABILITY // HYPERLEDGER FABRIC CONSORTIUM VERIFICATION SYSTEM</div>
-        <div className="footer-links">
+        <div className="footer-tags">
           <span>CHANNEL: mychannel</span>
           <span>FABRIC v2.5.4 LTS</span>
           <span>OECD ANNEX II COMPLIANCE ENGINE</span>
