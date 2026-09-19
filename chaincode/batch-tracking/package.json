@@ -1,0 +1,12 @@
+{
+  "name": "batch-tracking-chaincode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "fabric-contract-api": "^2.5.4",
+    "fabric-shim": "^2.5.4"
+  },
+  "scripts": {
+    "start": "fabric-chaincode-node start"
+  }
+}
