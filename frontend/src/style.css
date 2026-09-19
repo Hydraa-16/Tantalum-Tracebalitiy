@@ -76,11 +76,93 @@
   --shadow-button: 0 4px 18px rgba(243, 239, 0, 0.22);
 }
 
-/* Global Reset */
+/* Global Reset & Firefox Scrollbar */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #4A4725 #17160D;
+}
+
+/* WebKit (Chrome, Edge, Safari) Global Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #17160D;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #17160D;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4A4725;
+  border-radius: 9999px;
+  border: 2px solid #17160D;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #77732C;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #F3EF00;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #17160D;
+}
+
+/* Specific Internal Containers Custom Scrollbars */
+.dag-canvas,
+.ledger-table-wrap,
+.segmented-nav,
+.chips-row {
+  scrollbar-width: thin;
+  scrollbar-color: #4A4725 #13120A;
+}
+
+.dag-canvas::-webkit-scrollbar,
+.ledger-table-wrap::-webkit-scrollbar,
+.segmented-nav::-webkit-scrollbar,
+.chips-row::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #13120A;
+}
+
+.dag-canvas::-webkit-scrollbar-track,
+.ledger-table-wrap::-webkit-scrollbar-track,
+.segmented-nav::-webkit-scrollbar-track,
+.chips-row::-webkit-scrollbar-track {
+  background-color: #13120A;
+  border-radius: 9999px;
+}
+
+.dag-canvas::-webkit-scrollbar-thumb,
+.ledger-table-wrap::-webkit-scrollbar-thumb,
+.segmented-nav::-webkit-scrollbar-thumb,
+.chips-row::-webkit-scrollbar-thumb {
+  background-color: #4A4725;
+  border-radius: 9999px;
+  border: 2px solid #13120A;
+}
+
+.dag-canvas::-webkit-scrollbar-thumb:hover,
+.ledger-table-wrap::-webkit-scrollbar-thumb:hover,
+.segmented-nav::-webkit-scrollbar-thumb:hover,
+.chips-row::-webkit-scrollbar-thumb:hover {
+  background-color: #77732C;
+}
+
+.dag-canvas::-webkit-scrollbar-thumb:active,
+.ledger-table-wrap::-webkit-scrollbar-thumb:active,
+.segmented-nav::-webkit-scrollbar-thumb:active,
+.chips-row::-webkit-scrollbar-thumb:active {
+  background-color: #F3EF00;
 }
 
 body {
